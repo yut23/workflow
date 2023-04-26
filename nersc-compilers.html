@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Compiling at NERSC &mdash; AMReX-Astro 1.0 documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -28,14 +30,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> AMReX-Astro
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            AMReX-Astro
           </a>
               <div class="version">
                 1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -43,6 +49,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">AMReX Astro basics</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="alcf.html">Working at ALCF</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="nersc.html">Working at NERSC</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Compiling at NERSC</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cori-haswell">Cori Haswell</a><ul>
@@ -56,20 +63,15 @@
 <li class="toctree-l4"><a class="reference internal" href="#id1">Intel</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#cori-gpu">Cori GPU</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#compiling-with-gcc-cuda">Compiling with GCC + CUDA</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#running-on-cori-gpu">Running on Cori GPU</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#perlmutter">Perlmutter</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id2">Compiling with GCC + CUDA</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#running">Running</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#compiling-with-gcc-cuda">Compiling with GCC + CUDA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Hypre</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="nersc-workflow.html">Managing Jobs at NERSC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nersc-workflow.html#archiving-data-to-hpss">Archiving Data to HPSS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nersc-hpss.html">Archiving Data to HPSS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nersc-visualization.html">Visualization at NERSC</a></li>
 </ul>
 </li>
@@ -91,9 +93,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="nersc.html">Working at NERSC</a> &raquo;</li>
-      <li>Compiling at NERSC</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="nersc.html">Working at NERSC</a></li>
+      <li class="breadcrumb-item active">Compiling at NERSC</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/nersc-compilers.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -104,258 +106,102 @@
            <div itemprop="articleBody">
              
   <section id="compiling-at-nersc">
-<h1>Compiling at NERSC<a class="headerlink" href="#compiling-at-nersc" title="Permalink to this headline">¶</a></h1>
+<h1>Compiling at NERSC<a class="headerlink" href="#compiling-at-nersc" title="Permalink to this heading">¶</a></h1>
 <section id="cori-haswell">
-<h2>Cori Haswell<a class="headerlink" href="#cori-haswell" title="Permalink to this headline">¶</a></h2>
+<h2>Cori Haswell<a class="headerlink" href="#cori-haswell" title="Permalink to this heading">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You need to set:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">MPICH_MAX_THREAD_SAFETY</span><span class="o">=</span>multiple
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">MPICH_MAX_THREAD_SAFETY</span><span class="o">=</span>multiple
 </pre></div>
 </div>
 </div>
 <section id="intel">
-<h3>Intel<a class="headerlink" href="#intel" title="Permalink to this headline">¶</a></h3>
+<h3>Intel<a class="headerlink" href="#intel" title="Permalink to this heading">¶</a></h3>
 <p>Intel is the default programming environment on Cori and appear to
 be the preferred compilers.</p>
 </section>
 <section id="gnu">
-<h3>GNU<a class="headerlink" href="#gnu" title="Permalink to this headline">¶</a></h3>
+<h3>GNU<a class="headerlink" href="#gnu" title="Permalink to this heading">¶</a></h3>
 <p>You need to swap environments:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module swap PrgEnv-<span class="o">{</span>intel,gnu<span class="o">}</span>
-</pre></div>
-</div>
-<p>There are no known issues with GNU.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><style type="text/css">
+span.prompt1:before {
+  content: "$ ";
+}
+</style><span class="prompt1">module<span class="w"> </span>swap<span class="w"> </span>PrgEnv-<span class="o">{</span>intel,gnu<span class="o">}</span></span>
+</pre></div></div><p>There are no known issues with GNU.</p>
 </section>
 <section id="hypre">
-<h3>Hypre<a class="headerlink" href="#hypre" title="Permalink to this headline">¶</a></h3>
+<h3>Hypre<a class="headerlink" href="#hypre" title="Permalink to this heading">¶</a></h3>
 <p>These notes are from Edison.  Need to be confirmed on Cori Haswell.</p>
 <p>On Edison, the Cray <em>Third Party Scientific Libraries</em> provide Hypre
 in a form that works directly with the compiler wrappers used on that
 machine (<code class="docutils literal notranslate"><span class="pre">CC</span></code>, <code class="docutils literal notranslate"><span class="pre">ftn</span></code>, …).  To use this, simply do:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module load cray-tpsl
-</pre></div>
-</div>
-<p>There is no need to set <code class="docutils literal notranslate"><span class="pre">HYPRE_DIR</span></code>, but note however that the
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">module<span class="w"> </span>load<span class="w"> </span>cray-tpsl</span>
+</pre></div></div><p>There is no need to set <code class="docutils literal notranslate"><span class="pre">HYPRE_DIR</span></code>, but note however that the
 dependency checker script (<code class="docutils literal notranslate"><span class="pre">BoxLib/Tools/C_scripts/mkdep</span></code>) will
 complain about:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/path/to/Hypre--with-openmp/include does not exist
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/path/to/Hypre--with-openmp/include<span class="w"> </span>does<span class="w"> </span>not<span class="w"> </span>exist
 </pre></div>
 </div>
 <p>This can be ignored an compilation will finish.  If you do wish to
 silence it, you can set <code class="docutils literal notranslate"><span class="pre">HYPRE_DIR</span></code> to the path shown by:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module show cray-tpsl
-</pre></div>
-</div>
-<p>as:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">HYPRE_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">CRAY_TPSL_PREFIX_DIR</span><span class="si">}</span>
-</pre></div>
-</div>
-<p>This path will change dynamically to reflect which compiler programming
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">module<span class="w"> </span>show<span class="w"> </span>cray-tpsl</span>
+</pre></div></div><p>as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1"><span class="nb">export</span><span class="w"> </span><span class="nv">HYPRE_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">CRAY_TPSL_PREFIX_DIR</span><span class="si">}</span></span>
+</pre></div></div><p>This path will change dynamically to reflect which compiler programming
 environment you have loaded.  (You can also see that this is the path
 sent to the compilation by doing <code class="docutils literal notranslate"><span class="pre">ftn</span> <span class="pre">-craype-verbose</span></code>).</p>
 </section>
 <section id="preferred-configuration">
-<h3>Preferred configuration<a class="headerlink" href="#preferred-configuration" title="Permalink to this headline">¶</a></h3>
+<h3>Preferred configuration<a class="headerlink" href="#preferred-configuration" title="Permalink to this heading">¶</a></h3>
 <p>There are 32 cores per node on Cori Haswell.  Generally, using 4 or 8 OpenMP
 threads with 8 or 4 MPI tasks should work best.</p>
 </section>
 </section>
 <section id="cori-knl">
-<h2>Cori KNL<a class="headerlink" href="#cori-knl" title="Permalink to this headline">¶</a></h2>
+<h2>Cori KNL<a class="headerlink" href="#cori-knl" title="Permalink to this heading">¶</a></h2>
 <p>Regardless of the compiler, you need to swap the compiler weappers to
 use the AVX-512 instruction set supported on the Intel Phi processors
 (instead of the AVX-2 on the Haswell chips).  This is done as:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module swap craype-<span class="o">{</span>haswell,mic-knl<span class="o">}</span>
-</pre></div>
-</div>
-<p>It could happen that even when the various verbosities are set to 0,
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">module<span class="w"> </span>swap<span class="w"> </span>craype-<span class="o">{</span>haswell,mic-knl<span class="o">}</span></span>
+</pre></div></div><p>It could happen that even when the various verbosities are set to 0,
 when using several nodes (more than 64) in a run compiled with Intel,
 the follwing error shows:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>forrtl: severe <span class="o">(</span><span class="m">40</span><span class="o">)</span>: recursive I/O operation, unit -1, file unknown
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>forrtl:<span class="w"> </span>severe<span class="w"> </span><span class="o">(</span><span class="m">40</span><span class="o">)</span>:<span class="w"> </span>recursive<span class="w"> </span>I/O<span class="w"> </span>operation,<span class="w"> </span>unit<span class="w"> </span>-1,<span class="w"> </span>file<span class="w"> </span>unknown
 </pre></div>
 </div>
 <p>Seems like the error is due to all threads printing to stdout. Adding
 the following to the <code class="docutils literal notranslate"><span class="pre">inputs</span></code> file, prevents this error to occur:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>castro.print_fortran_warnings <span class="o">=</span> <span class="m">0</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>castro.print_fortran_warnings<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 </div>
 <section id="id1">
-<h3>Intel<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Intel<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>When running MAESTROeX, we seem to need:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>amrex.signal_handling <span class="o">=</span> <span class="m">0</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>amrex.signal_handling<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 </div>
 <p>otherwise we get an <code class="docutils literal notranslate"><span class="pre">Erroneous</span> <span class="pre">arithmetic</span> <span class="pre">error</span></code>.</p>
 </section>
 </section>
-<section id="cori-gpu">
-<h2>Cori GPU<a class="headerlink" href="#cori-gpu" title="Permalink to this headline">¶</a></h2>
-<p>To use the Cori GPU system, you first need to load the <code class="docutils literal notranslate"><span class="pre">cgpu</span></code> module:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module purge
-module load cgpu
-</pre></div>
-</div>
-<p>This will ensure the correct OpenMPI module is loaded in the next section.</p>
-<p>Loading <code class="docutils literal notranslate"><span class="pre">cgpu</span></code> will also let you check on your running jobs using <code class="docutils literal notranslate"><span class="pre">squeue</span></code>.</p>
-<section id="compiling-with-gcc-cuda">
-<h3>Compiling with GCC + CUDA<a class="headerlink" href="#compiling-with-gcc-cuda" title="Permalink to this headline">¶</a></h3>
-<p>We use the gcc, CUDA, and OpenMPI modules for Cori GPU, so load them in this
-order:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module load PrgEnv-gnu
-module load gcc
-module load cuda
-module load openmpi
-module load python3
-</pre></div>
-</div>
-<p>Then to compile, we’ll need to get an interactive session on a Cori GPU node.
-This example gets 1 Cori GPU node with 1 GPU/node and 10 CPU cores/node for 60
-minutes, reserving 30GB of RAM per node:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>salloc -C gpu --gres<span class="o">=</span>gpu:1 -N <span class="m">1</span> -t <span class="m">60</span> -c <span class="m">10</span> --mem<span class="o">=</span>30GB -A <span class="o">[</span>your allocation, e.g. mABCD<span class="o">]</span> <span class="o">[</span>--exclusive<span class="o">]</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If the optional <code class="docutils literal notranslate"><span class="pre">--exclusive</span></code> argument is present, then your job will have
-exclusive use of the nodes you requested for the duration of the job.  The
-default behavior on Cori GPU is for jobs to share the GPU nodes, since there
-are a limited number.</p>
-</div>
-<p>Build, e.g. the Castro Sedov hydro test problem:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make -j <span class="nv">COMP</span><span class="o">=</span>gnu <span class="nv">TINY_PROFILE</span><span class="o">=</span>TRUE <span class="nv">USE_MPI</span><span class="o">=</span>TRUE <span class="nv">USE_OMP</span><span class="o">=</span>FALSE <span class="nv">USE_CUDA</span><span class="o">=</span>TRUE
-</pre></div>
-</div>
-</section>
-<section id="running-on-cori-gpu">
-<h3>Running on Cori GPU<a class="headerlink" href="#running-on-cori-gpu" title="Permalink to this headline">¶</a></h3>
-<p>Use a SLURM script to set 1 MPI rank per GPU. In this example, we’re using 2 nodes, each with 8 GPUs.</p>
-<p>Sample SLURM script <code class="docutils literal notranslate"><span class="pre">cori.MPI.CUDA.gpu.2nodes.slurm</span></code>, for this and other Cori
-GPU SLURM scripts, see
-<a class="reference external" href="https://github.com/AMReX-Astro/workflow/blob/main/job_scripts/cori-gpu">our Cori GPU SLURM scripts on GitHub</a></p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/bash</span>
-<span class="linenos"> 2</span><span class="c1">#</span>
-<span class="linenos"> 3</span><span class="c1"># Number of nodes:</span>
-<span class="linenos"> 4</span><span class="c1">#SBATCH --nodes=2</span>
-<span class="linenos"> 5</span><span class="c1">#</span>
-<span class="linenos"> 6</span><span class="c1">############################################</span>
-<span class="linenos"> 7</span><span class="c1"># Cori GPU node configuration</span>
-<span class="linenos"> 8</span><span class="c1">#</span>
-<span class="linenos"> 9</span><span class="c1"># This lets SLURM pick the right number of</span>
-<span class="linenos">10</span><span class="c1"># MPI tasks given the number of nodes</span>
-<span class="linenos">11</span><span class="c1"># requested above. These settings will</span>
-<span class="linenos">12</span><span class="c1"># assign 1 MPI task per GPU.</span>
-<span class="linenos">13</span><span class="c1">#</span>
-<span class="linenos">14</span><span class="c1"># (generally you won&#39;t need to change this)</span>
-<span class="linenos">15</span><span class="c1">############################################</span>
-<span class="linenos">16</span><span class="c1">#</span>
-<span class="linenos">17</span><span class="c1"># Requests Cori GPU nodes:</span>
-<span class="linenos">18</span><span class="c1">#SBATCH --constraint=gpu</span>
-<span class="linenos">19</span><span class="c1">#</span>
-<span class="linenos">20</span><span class="c1"># Each GPU node has 40 physical CPU cores</span>
-<span class="linenos">21</span><span class="c1"># (w/ 2 hyperthreads, so 80 virtual CPU cores)</span>
-<span class="linenos">22</span><span class="c1"># and 8 NVIDIA Tesla V100 GPUs.</span>
-<span class="linenos">23</span><span class="c1">#</span>
-<span class="linenos">24</span><span class="c1"># GPU: Assign 1 MPI tasks to each GPU</span>
-<span class="linenos">25</span><span class="c1">#SBATCH --tasks-per-node=8</span>
-<span class="linenos">26</span><span class="c1">#</span>
-<span class="linenos">27</span><span class="c1"># We want all 8 GPUs on the node</span>
-<span class="linenos">28</span><span class="c1">#SBATCH --gres=gpu:8</span>
-<span class="linenos">29</span><span class="c1">#</span>
-<span class="linenos">30</span><span class="c1"># Since we want the entire node (all the GPUs)</span>
-<span class="linenos">31</span><span class="c1"># with 8 MPI tasks, this is 80/8 = 10 virtual CPUs</span>
-<span class="linenos">32</span><span class="c1"># per MPI task.</span>
-<span class="linenos">33</span><span class="c1">#SBATCH --cpus-per-task=10</span>
-<span class="linenos">34</span><span class="c1">#</span>
-<span class="linenos">35</span><span class="c1">#################</span>
-<span class="linenos">36</span><span class="c1"># Queue &amp; Job</span>
-<span class="linenos">37</span><span class="c1">#################</span>
-<span class="linenos">38</span><span class="c1">#</span>
-<span class="linenos">39</span><span class="c1"># Which queue to run in: debug, regular, premium, etc. ...</span>
-<span class="linenos">40</span><span class="c1"># For now, don&#39;t use --qos</span>
-<span class="linenos">41</span><span class="c1">## SBATCH --qos=debug</span>
-<span class="linenos">42</span><span class="c1">#</span>
-<span class="linenos">43</span><span class="c1"># Run for this much walltime: hh:mm:ss</span>
-<span class="linenos">44</span><span class="c1">#SBATCH --time=00:15:00</span>
-<span class="linenos">45</span><span class="c1">#</span>
-<span class="linenos">46</span><span class="c1"># Use this job name:</span>
-<span class="linenos">47</span><span class="c1">#SBATCH -J castro_gpu_job</span>
-<span class="linenos">48</span><span class="c1">#</span>
-<span class="linenos">49</span><span class="c1"># Send notification emails here:</span>
-<span class="linenos">50</span><span class="c1">#SBATCH --mail-user=[your email address]</span>
-<span class="linenos">51</span><span class="c1">#SBATCH --mail-type=ALL</span>
-<span class="linenos">52</span><span class="c1">#</span>
-<span class="linenos">53</span><span class="c1"># Which allocation to use:</span>
-<span class="linenos">54</span><span class="c1">#SBATCH -A [your allocation ID, e.g. mABCD]</span>
-<span class="linenos">55</span>
-<span class="linenos">56</span><span class="c1"># On the compute node, change to the directory we submitted from</span>
-<span class="linenos">57</span><span class="nb">cd</span> <span class="nv">$SLURM_SUBMIT_DIR</span>
-<span class="linenos">58</span>
-<span class="linenos">59</span><span class="c1"># OpenMP Configuration</span>
-<span class="linenos">60</span><span class="c1"># This configuration ignores the hyperthreads</span>
-<span class="linenos">61</span><span class="c1"># and assigns 1 OpenMP thread/physical core</span>
-<span class="linenos">62</span><span class="nb">export</span> <span class="nv">OMP_PLACES</span><span class="o">=</span>cores
-<span class="linenos">63</span><span class="nb">export</span> <span class="nv">OMP_PROC_BIND</span><span class="o">=</span><span class="nb">true</span>
-<span class="linenos">64</span><span class="nb">export</span> <span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">5</span>
-<span class="linenos">65</span>
-<span class="linenos">66</span>srun --cpu_bind<span class="o">=</span>cores ./Castro3d.gnu.TPROF.MPI.CUDA.ex inputs.3d.sph.testsuite
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Replace <code class="docutils literal notranslate"><span class="pre">[your</span> <span class="pre">email</span> <span class="pre">address]</span></code> and <code class="docutils literal notranslate"><span class="pre">[your</span> <span class="pre">allocation]</span></code> with your info
-(omitting the brackets).</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It is important to submit the Cori GPU SLURM script from a Cori login node.
-If you submit the script from your Cori GPU interactive session, the memory
-constraints you passed to <code class="docutils literal notranslate"><span class="pre">salloc</span></code> will conflict with the GPU options
-specified in the SLURM script.</p>
-</div>
-<p>So we’ll next submit the SLURM script from a Cori login node, with the above
-modules loaded:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch <span class="o">[</span>--exclusive<span class="o">]</span> cori.MPI.CUDA.gpu.2nodes.slurm
-</pre></div>
-</div>
-<p>(The optional <code class="docutils literal notranslate"><span class="pre">--exclusive</span></code> argument has the same meaning as for <code class="docutils literal notranslate"><span class="pre">salloc</span></code> above.)</p>
-<p>We can monitor the job by checking <code class="docutils literal notranslate"><span class="pre">squeue</span> <span class="pre">-u</span> <span class="pre">[user]</span></code> as usual with the
-<code class="docutils literal notranslate"><span class="pre">cgpu</span></code> module loaded.</p>
-</section>
-</section>
 <section id="perlmutter">
-<h2>Perlmutter<a class="headerlink" href="#perlmutter" title="Permalink to this headline">¶</a></h2>
+<h2>Perlmutter<a class="headerlink" href="#perlmutter" title="Permalink to this heading">¶</a></h2>
+<p>Log into Perlmutter via</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">ssh<span class="w"> </span>perlmutter-p1.nersc.gov</span>
+</pre></div></div><section id="compiling-with-gcc-cuda">
+<h3>Compiling with GCC + CUDA<a class="headerlink" href="#compiling-with-gcc-cuda" title="Permalink to this heading">¶</a></h3>
+<p>Load gcc and CUDA</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">module<span class="w"> </span>load<span class="w"> </span>PrgEnv-gnu</span>
+<span class="prompt1">module<span class="w"> </span>load<span class="w"> </span>cudatoolkit</span>
+</pre></div></div><p>Build, e.g. the Castro Sedov hydro test problem</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">make<span class="w"> </span>-j<span class="w"> </span><span class="nv">COMP</span><span class="o">=</span>gnu<span class="w"> </span><span class="nv">TINY_PROFILE</span><span class="o">=</span>TRUE<span class="w"> </span><span class="nv">USE_MPI</span><span class="o">=</span>TRUE<span class="w"> </span><span class="nv">USE_OMP</span><span class="o">=</span>FALSE<span class="w"> </span><span class="nv">USE_CUDA</span><span class="o">=</span>TRUE</span>
+</pre></div></div></section>
 <section id="id2">
-<h3>Compiling with GCC + CUDA<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>Load gcc and CUDA:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module load PrgEnv-gnu
-module load cudatoolkit
-</pre></div>
-</div>
-<p>Build, e.g. the Castro Sedov hydro test problem:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make -j <span class="nv">COMP</span><span class="o">=</span>gnu <span class="nv">TINY_PROFILE</span><span class="o">=</span>TRUE <span class="nv">USE_MPI</span><span class="o">=</span>TRUE <span class="nv">USE_OMP</span><span class="o">=</span>FALSE <span class="nv">USE_CUDA</span><span class="o">=</span>TRUE
-</pre></div>
-</div>
-</section>
-<section id="running">
-<h3>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h3>
-<p>Below is an example that launches the Sedov test compiled above with 4 GPUs per node on 4 nodes.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/bash</span>
-<span class="linenos"> 2</span>
-<span class="linenos"> 3</span><span class="c1">#SBATCH -A m3018_g</span>
-<span class="linenos"> 4</span><span class="c1">#SBATCH -C gpu</span>
-<span class="linenos"> 5</span><span class="c1">#SBATCH -J Castro</span>
-<span class="linenos"> 6</span><span class="c1">#SBATCH -o sedov_%j.out</span>
-<span class="linenos"> 7</span><span class="c1">#SBATCH -t 10</span>
-<span class="linenos"> 8</span><span class="c1">#SBATCH -N 4</span>
-<span class="linenos"> 9</span><span class="c1">#SBATCH --ntasks-per-node=4</span>
-<span class="linenos">10</span><span class="c1">#SBATCH --gpus-per-task=1</span>
-<span class="linenos">11</span><span class="c1">#SBATCH --gpu-bind=map_gpu:0,1,2,3</span>
-<span class="linenos">12</span>
-<span class="linenos">13</span>srun -n <span class="m">16</span> ./Castro3d.gnu.TPROF.MPI.CUDA.ex inputs.3d.sph.testsuite amr.n_cell<span class="o">=</span><span class="m">256</span> <span class="m">256</span> <span class="m">256</span> amr.plot_files_output<span class="o">=</span><span class="m">0</span> amr.checkpoint_files_output<span class="o">=</span><span class="m">0</span> amr.max_grid_size<span class="o">=</span><span class="m">128</span> <span class="nv">max_step</span><span class="o">=</span><span class="m">100</span>
-</pre></div>
-</div>
-</section>
+<h3>Hypre<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>Hypre should be obtained from GitHub, and built using the same PrgEnv that you are using for Castro:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1"><span class="nv">HYPRE_CUDA_SM</span><span class="o">=</span><span class="m">80</span><span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>CC<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>cc<span class="w"> </span><span class="nv">FC</span><span class="o">=</span>ftn<span class="w"> </span>./configure<span class="w"> </span>--prefix<span class="o">=</span>/path/to/hypre/install<span class="w"> </span>--with-MPI<span class="w"> </span>--with-cuda<span class="w"> </span>--enable-unified-memory</span>
+</pre></div></div></section>
 </section>
 </section>
 
