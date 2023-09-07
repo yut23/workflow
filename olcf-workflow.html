@@ -13,11 +13,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -64,9 +64,16 @@
 <li class="toctree-l4"><a class="reference internal" href="#chaining-jobs">Chaining jobs</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#crusher">Crusher</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#archiving-to-hpss">Archiving to HPSS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#frontier">Frontier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frontier">Frontier</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#machine-details">Machine details</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submitting-jobs">Submitting jobs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#job-status">Job Status</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#job-chaining">Job Chaining</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#debugging">Debugging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="olcf-jupyter.html">Running Jupyter Remotely from OLCF</a></li>
@@ -103,11 +110,11 @@
            <div itemprop="articleBody">
              
   <section id="managing-jobs-at-olcf">
-<h1>Managing Jobs at OLCF<a class="headerlink" href="#managing-jobs-at-olcf" title="Permalink to this heading">¶</a></h1>
+<h1>Managing Jobs at OLCF<a class="headerlink" href="#managing-jobs-at-olcf" title="Link to this heading">¶</a></h1>
 <section id="summit">
-<h2>Summit<a class="headerlink" href="#summit" title="Permalink to this heading">¶</a></h2>
+<h2>Summit<a class="headerlink" href="#summit" title="Link to this heading">¶</a></h2>
 <section id="summit-architecture">
-<h3>Summit Architecture:<a class="headerlink" href="#summit-architecture" title="Permalink to this heading">¶</a></h3>
+<h3>Summit Architecture:<a class="headerlink" href="#summit-architecture" title="Link to this heading">¶</a></h3>
 <p>Let us start by reviewing the node architecture of Summit. Our goal is to provide the necessary insight to make better
 decisions in the construction of our particular AMReX-Astro job scripts, and to explain how our code interacts with Summit.
 All the exposed information in this section is a condensed version of the <a class="reference external" href="https://docs.olcf.ornl.gov/systems/summit_user_guide.html#job-launcher-jsrun">Summit documentation guide</a>, and should not replace it.</p>
@@ -117,7 +124,7 @@ The whole structure of the node can be depicted as follows:</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="_images/summit-node-description-1.png"><img alt="_images/summit-node-description-1.png" src="_images/summit-node-description-1.png" style="width: 100%;" /></a>
 <figcaption>
-<p><span class="caption-text">Figure extracted from <code class="docutils literal notranslate"><span class="pre">https://docs.olcf.ornl.gov/systems/summit_user_guide.html#job-launcher-jsrun</span></code>.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Figure extracted from <code class="docutils literal notranslate"><span class="pre">https://docs.olcf.ornl.gov/systems/summit_user_guide.html#job-launcher-jsrun</span></code>.</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>A resource set is a minimal collection of CPU physical cores and GPU’s, on which a certain number of MPI processes and OpenMP
@@ -137,12 +144,12 @@ we can fit up to 6 resource sets per node as in Figure 2.</p>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="_images/image56.png"><img alt="_images/image56.png" src="_images/image56.png" style="width: 100%;" /></a>
 <figcaption>
-<p><span class="caption-text">Figure modified and extracted from <code class="docutils literal notranslate"><span class="pre">https://docs.olcf.ornl.gov/systems/summit_user_guide.html#job-launcher-jsrun</span></code>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Figure modified and extracted from <code class="docutils literal notranslate"><span class="pre">https://docs.olcf.ornl.gov/systems/summit_user_guide.html#job-launcher-jsrun</span></code>.</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="requesting-allocation">
-<h3>Requesting Allocation:<a class="headerlink" href="#requesting-allocation" title="Permalink to this heading">¶</a></h3>
+<h3>Requesting Allocation:<a class="headerlink" href="#requesting-allocation" title="Link to this heading">¶</a></h3>
 <p>To allocate the resource sets we need to summon the command <code class="docutils literal notranslate"><span class="pre">bsub</span></code> in addition to some flags:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -204,7 +211,7 @@ span.prompt1:before {
 </div>
 </section>
 <section id="submitting-a-job">
-<h3>Submitting a Job:<a class="headerlink" href="#submitting-a-job" title="Permalink to this heading">¶</a></h3>
+<h3>Submitting a Job:<a class="headerlink" href="#submitting-a-job" title="Link to this heading">¶</a></h3>
 <p>Once our allocation is granted, is important to load the same modules used in the compilation process of the executable and
 export the variable <code class="docutils literal notranslate"><span class="pre">OMP_NUM_THREADS</span></code> to setup the number of threads per MPI process.</p>
 <p>In Castro, we have used the following modules:</p>
@@ -251,7 +258,7 @@ on each level balanced to maximize the use of the allocated resources.</p>
 </div>
 </section>
 <section id="writting-a-job-script">
-<h3>Writting a Job Script:<a class="headerlink" href="#writting-a-job-script" title="Permalink to this heading">¶</a></h3>
+<h3>Writting a Job Script:<a class="headerlink" href="#writting-a-job-script" title="Link to this heading">¶</a></h3>
 <p>In order to make our life easier, instead of submitting an allocation command line, loading the modules, setting the threads/MPI process, and writing
 another command line to submit our jobs, we can make an script to pack all these command into one executable <code class="docutils literal notranslate"><span class="pre">.sh</span></code> file, that can be submitted</p>
 <blockquote>
@@ -347,12 +354,12 @@ the latest file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">bsub<span class="w"> </span>luna_script.sh</span>
 </pre></div></div></section>
 <section id="monitoring-a-job">
-<h3>Monitoring a Job:<a class="headerlink" href="#monitoring-a-job" title="Permalink to this heading">¶</a></h3>
+<h3>Monitoring a Job:<a class="headerlink" href="#monitoring-a-job" title="Link to this heading">¶</a></h3>
 <p>You can monitor the status of your jobs using <code class="docutils literal notranslate"><span class="pre">bjobs</span></code>. Also, a slightly nicer view of your jobs can be viewed using <code class="docutils literal notranslate"><span class="pre">jobstat</span></code> as:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">jobstat<span class="w"> </span>-u<span class="w"> </span>username</span>
 </pre></div></div></section>
 <section id="script-template">
-<h3>Script Template:<a class="headerlink" href="#script-template" title="Permalink to this heading">¶</a></h3>
+<h3>Script Template:<a class="headerlink" href="#script-template" title="Link to this heading">¶</a></h3>
 <p>Packing all the information before, lead us to the following script template</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/bash</span>
 <span class="linenos"> 2</span><span class="c1">#BSUB -P ast106</span>
@@ -362,71 +369,94 @@ the latest file.</p>
 <span class="linenos"> 6</span><span class="c1">#BSUB -J luna_script</span>
 <span class="linenos"> 7</span><span class="c1">#BSUB -o luna_output.%J</span>
 <span class="linenos"> 8</span><span class="c1">#BSUB -e luna_sniffing_output.%J</span>
-<span class="linenos"> 9</span>
-<span class="linenos">10</span>module<span class="w"> </span>load<span class="w"> </span>gcc/10.2.0
-<span class="linenos">11</span>module<span class="w"> </span>load<span class="w"> </span>cuda/11.5.2
-<span class="linenos">12</span>module<span class="w"> </span>load<span class="w"> </span>python
-<span class="linenos">13</span>
-<span class="linenos">14</span><span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
-<span class="linenos">15</span>
-<span class="linenos">16</span><span class="nv">CASTRO</span><span class="o">=</span>./Castro2d.gnu.MPI.CUDA.ex
-<span class="linenos">17</span><span class="nv">INPUTS</span><span class="o">=</span>inputs_luna
+<span class="linenos"> 9</span><span class="c1">#BSUB -wa URG</span>
+<span class="linenos">10</span><span class="c1">#BSUB -wt 2</span>
+<span class="linenos">11</span><span class="c1"># last 2 options are used for graceful exit</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>module<span class="w"> </span>load<span class="w"> </span>gcc/10.2.0
+<span class="linenos">14</span>module<span class="w"> </span>load<span class="w"> </span>cuda/11.5.2
+<span class="linenos">15</span>module<span class="w"> </span>load<span class="w"> </span>python
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
 <span class="linenos">18</span>
-<span class="linenos">19</span><span class="nv">n_res</span><span class="o">=</span><span class="m">480</span><span class="w">                </span><span class="c1"># The max allocated number of resource sets is</span>
-<span class="linenos">20</span><span class="nv">n_cpu_cores_per_res</span><span class="o">=</span><span class="m">1</span><span class="w">    </span><span class="c1"># nnodes * n_max_res_per_node. In this case we will</span>
-<span class="linenos">21</span><span class="nv">n_mpi_per_res</span><span class="o">=</span><span class="m">1</span><span class="w">          </span><span class="c1"># use all the allocated resource sets to run the job below,</span>
-<span class="linenos">22</span><span class="nv">n_gpu_per_res</span><span class="o">=</span><span class="m">1</span><span class="w">          </span><span class="c1"># however we can define more enviroment variables to allocate two jobs</span>
-<span class="linenos">23</span><span class="nv">n_max_res_per_node</span><span class="o">=</span><span class="m">6</span><span class="w">     </span><span class="c1"># simultaneous jobs, where n_res = n_res_1 + n_res2 allocates for two jobs.</span>
-<span class="linenos">24</span>
-<span class="linenos">25</span><span class="k">function</span><span class="w"> </span>find_chk_file<span class="w"> </span><span class="o">{</span>
-<span class="linenos">26</span><span class="w">    </span><span class="c1"># find_chk_file takes a single argument -- the wildcard pattern</span>
-<span class="linenos">27</span><span class="w">    </span><span class="c1"># for checkpoint files to look through</span>
-<span class="linenos">28</span><span class="w">    </span><span class="nv">chk</span><span class="o">=</span><span class="nv">$1</span>
-<span class="linenos">29</span>
-<span class="linenos">30</span><span class="w">    </span><span class="c1"># find the latest 2 restart files.  This way if the latest didn&#39;t</span>
-<span class="linenos">31</span><span class="w">    </span><span class="c1"># complete we fall back to the previous one.</span>
-<span class="linenos">32</span><span class="w">    </span><span class="nv">temp_files</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span>.<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">chk</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>-print<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-2<span class="k">)</span>
-<span class="linenos">33</span><span class="w">    </span><span class="nv">restartFile</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-<span class="linenos">34</span><span class="w">    </span><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">temp_files</span><span class="si">}</span>
-<span class="linenos">35</span><span class="w">    </span><span class="k">do</span>
-<span class="linenos">36</span><span class="w">        </span><span class="c1"># the Header is the last thing written -- if it&#39;s there, update the restart file</span>
-<span class="linenos">37</span><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="si">${</span><span class="nv">f</span><span class="si">}</span>/Header<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="linenos">38</span><span class="w">            </span><span class="c1"># The scratch FS sometimes gives I/O errors when trying to read</span>
-<span class="linenos">39</span><span class="w">            </span><span class="c1"># from recently-created files, which crashes Castro. Avoid this by</span>
-<span class="linenos">40</span><span class="w">            </span><span class="c1"># making sure we can read from all the data files.</span>
-<span class="linenos">41</span><span class="w">            </span><span class="k">if</span><span class="w"> </span>head<span class="w"> </span>--quiet<span class="w"> </span>-c1<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">f</span><span class="si">}</span><span class="s2">/Header&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">f</span><span class="si">}</span><span class="s2">&quot;</span>/Level_*/*<span class="w"> </span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="linenos">42</span><span class="w">                </span><span class="nv">restartFile</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">f</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="linenos">43</span><span class="w">            </span><span class="k">fi</span>
-<span class="linenos">44</span><span class="w">        </span><span class="k">fi</span>
-<span class="linenos">45</span><span class="w">    </span><span class="k">done</span>
-<span class="linenos">46</span><span class="o">}</span>
-<span class="linenos">47</span>
-<span class="linenos">48</span><span class="c1"># look for 7-digit chk files</span>
-<span class="linenos">49</span>find_chk_file<span class="w"> </span><span class="s2">&quot;*chk???????&quot;</span>
+<span class="linenos">19</span><span class="nv">CASTRO</span><span class="o">=</span>./Castro2d.gnu.MPI.CUDA.ex
+<span class="linenos">20</span><span class="nv">INPUTS</span><span class="o">=</span>inputs_luna
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="nv">n_res</span><span class="o">=</span><span class="m">480</span><span class="w">                </span><span class="c1"># The max allocated number of resource sets is</span>
+<span class="linenos">23</span><span class="nv">n_cpu_cores_per_res</span><span class="o">=</span><span class="m">1</span><span class="w">    </span><span class="c1"># nnodes * n_max_res_per_node. In this case we will</span>
+<span class="linenos">24</span><span class="nv">n_mpi_per_res</span><span class="o">=</span><span class="m">1</span><span class="w">          </span><span class="c1"># use all the allocated resource sets to run the job below,</span>
+<span class="linenos">25</span><span class="nv">n_gpu_per_res</span><span class="o">=</span><span class="m">1</span><span class="w">          </span><span class="c1"># however we can define more enviroment variables to allocate two jobs</span>
+<span class="linenos">26</span><span class="nv">n_max_res_per_node</span><span class="o">=</span><span class="m">6</span><span class="w">     </span><span class="c1"># simultaneous jobs, where n_res = n_res_1 + n_res2 allocates for two jobs.</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="k">function</span><span class="w"> </span>find_chk_file<span class="w"> </span><span class="o">{</span>
+<span class="linenos">29</span><span class="w">    </span><span class="c1"># find_chk_file takes a single argument -- the wildcard pattern</span>
+<span class="linenos">30</span><span class="w">    </span><span class="c1"># for checkpoint files to look through</span>
+<span class="linenos">31</span><span class="w">    </span><span class="nv">chk</span><span class="o">=</span><span class="nv">$1</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="w">    </span><span class="c1"># find the latest 2 restart files.  This way if the latest didn&#39;t</span>
+<span class="linenos">34</span><span class="w">    </span><span class="c1"># complete we fall back to the previous one.</span>
+<span class="linenos">35</span><span class="w">    </span><span class="nv">temp_files</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span>.<span class="w"> </span>-maxdepth<span class="w"> </span><span class="m">1</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">chk</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>-print<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-2<span class="k">)</span>
+<span class="linenos">36</span><span class="w">    </span><span class="nv">restartFile</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="linenos">37</span><span class="w">    </span><span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="si">${</span><span class="nv">temp_files</span><span class="si">}</span>
+<span class="linenos">38</span><span class="w">    </span><span class="k">do</span>
+<span class="linenos">39</span><span class="w">        </span><span class="c1"># the Header is the last thing written -- if it&#39;s there, update the restart file</span>
+<span class="linenos">40</span><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="si">${</span><span class="nv">f</span><span class="si">}</span>/Header<span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="linenos">41</span><span class="w">            </span><span class="c1"># The scratch FS sometimes gives I/O errors when trying to read</span>
+<span class="linenos">42</span><span class="w">            </span><span class="c1"># from recently-created files, which crashes Castro. Avoid this by</span>
+<span class="linenos">43</span><span class="w">            </span><span class="c1"># making sure we can read from all the data files.</span>
+<span class="linenos">44</span><span class="w">            </span><span class="k">if</span><span class="w"> </span>head<span class="w"> </span>--quiet<span class="w"> </span>-c1<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">f</span><span class="si">}</span><span class="s2">/Header&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">f</span><span class="si">}</span><span class="s2">&quot;</span>/Level_*/*<span class="w"> </span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="linenos">45</span><span class="w">                </span><span class="nv">restartFile</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="linenos">46</span><span class="w">            </span><span class="k">fi</span>
+<span class="linenos">47</span><span class="w">        </span><span class="k">fi</span>
+<span class="linenos">48</span><span class="w">    </span><span class="k">done</span>
+<span class="linenos">49</span><span class="o">}</span>
 <span class="linenos">50</span>
-<span class="linenos">51</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">restartFile</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="linenos">52</span><span class="w">    </span><span class="c1"># look for 6-digit chk files</span>
-<span class="linenos">53</span><span class="w">    </span>find_chk_file<span class="w"> </span><span class="s2">&quot;*chk??????&quot;</span>
-<span class="linenos">54</span><span class="k">fi</span>
-<span class="linenos">55</span>
-<span class="linenos">56</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">restartFile</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="linenos">57</span><span class="w">    </span><span class="c1"># look for 5-digit chk files</span>
-<span class="linenos">58</span><span class="w">    </span>find_chk_file<span class="w"> </span><span class="s2">&quot;*chk?????&quot;</span>
-<span class="linenos">59</span><span class="k">fi</span>
-<span class="linenos">60</span>
-<span class="linenos">61</span><span class="c1"># restartString will be empty if no chk files are found -- i.e. new run</span>
-<span class="linenos">62</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">restartFile</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="linenos">63</span><span class="w">    </span><span class="nv">restartString</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-<span class="linenos">64</span><span class="k">else</span>
-<span class="linenos">65</span><span class="w">    </span><span class="nv">restartString</span><span class="o">=</span><span class="s2">&quot;amr.restart=</span><span class="si">${</span><span class="nv">restartFile</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="linenos">66</span><span class="k">fi</span>
-<span class="linenos">67</span>
-<span class="linenos">68</span>jsrun<span class="w"> </span>-n<span class="nv">$n_res</span><span class="w"> </span>-c<span class="nv">$n_cpu_cores_per_res</span>$<span class="w"> </span>-a<span class="nv">$n_mpi_per_res</span><span class="w"> </span>-g<span class="nv">$n_gpu_per_res</span><span class="w"> </span>-r<span class="nv">$n_max_res_per_node</span><span class="w"> </span>./<span class="nv">$CASTRO</span><span class="w"> </span><span class="nv">$INPUTS</span><span class="w"> </span><span class="si">${</span><span class="nv">restartString</span><span class="si">}</span>
+<span class="linenos">51</span><span class="c1"># look for 7-digit chk files</span>
+<span class="linenos">52</span>find_chk_file<span class="w"> </span><span class="s2">&quot;*chk???????&quot;</span>
+<span class="linenos">53</span>
+<span class="linenos">54</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">restartFile</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="linenos">55</span><span class="w">    </span><span class="c1"># look for 6-digit chk files</span>
+<span class="linenos">56</span><span class="w">    </span>find_chk_file<span class="w"> </span><span class="s2">&quot;*chk??????&quot;</span>
+<span class="linenos">57</span><span class="k">fi</span>
+<span class="linenos">58</span>
+<span class="linenos">59</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">restartFile</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="linenos">60</span><span class="w">    </span><span class="c1"># look for 5-digit chk files</span>
+<span class="linenos">61</span><span class="w">    </span>find_chk_file<span class="w"> </span><span class="s2">&quot;*chk?????&quot;</span>
+<span class="linenos">62</span><span class="k">fi</span>
+<span class="linenos">63</span>
+<span class="linenos">64</span><span class="c1"># restartString will be empty if no chk files are found -- i.e. new run</span>
+<span class="linenos">65</span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">restartFile</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="linenos">66</span><span class="w">    </span><span class="nv">restartString</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="linenos">67</span><span class="k">else</span>
+<span class="linenos">68</span><span class="w">    </span><span class="nv">restartString</span><span class="o">=</span><span class="s2">&quot;amr.restart=</span><span class="si">${</span><span class="nv">restartFile</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="linenos">69</span><span class="k">fi</span>
+<span class="linenos">70</span>
+<span class="linenos">71</span><span class="c1"># clean up any run management files that may be left over from previous runs</span>
+<span class="linenos">72</span>rm<span class="w"> </span>-f<span class="w"> </span>dump_and_continue<span class="w"> </span>dump_and_stop<span class="w"> </span>stop_run
+<span class="linenos">73</span>
+<span class="linenos">74</span><span class="nv">warning_time</span><span class="o">=</span><span class="k">$(</span>bjobs<span class="w"> </span>-noheader<span class="w"> </span>-o<span class="w"> </span>action_warning_time<span class="w"> </span><span class="nv">$LSB_JOBID</span><span class="k">)</span>
+<span class="linenos">75</span><span class="c1"># The `-wa URG -wt &lt;n&gt;` options tell bsub to send SIGURG to all processes n</span>
+<span class="linenos">76</span><span class="c1"># minutes before the runtime limit, so we can exit gracefully.</span>
+<span class="linenos">77</span><span class="c1"># SIGURG is ignored by default, so it won&#39;t make Castro crash.</span>
+<span class="linenos">78</span><span class="k">function</span><span class="w"> </span>sig_handler<span class="w"> </span><span class="o">{</span>
+<span class="linenos">79</span><span class="w">    </span>touch<span class="w"> </span>dump_and_stop
+<span class="linenos">80</span><span class="w">    </span><span class="c1"># disable this signal handler</span>
+<span class="linenos">81</span><span class="w">    </span><span class="nb">trap</span><span class="w"> </span>-<span class="w"> </span>URG
+<span class="linenos">82</span><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;BATCH: </span><span class="nv">$warning_time</span><span class="s2"> left in allocation; telling Castro to dump a checkpoint and stop&quot;</span>
+<span class="linenos">83</span><span class="o">}</span>
+<span class="linenos">84</span><span class="nb">trap</span><span class="w"> </span>sig_handler<span class="w"> </span>URG
+<span class="linenos">85</span>
+<span class="linenos">86</span><span class="c1"># execute jsrun in the background then use the builtin wait so the shell can</span>
+<span class="linenos">87</span><span class="c1"># handle the signal</span>
+<span class="linenos">88</span>jsrun<span class="w"> </span>-n<span class="nv">$n_res</span><span class="w"> </span>-c<span class="nv">$n_cpu_cores_per_res</span><span class="w"> </span>-a<span class="nv">$n_mpi_per_res</span><span class="w"> </span>-g<span class="nv">$n_gpu_per_res</span><span class="w"> </span>-r<span class="nv">$n_max_res_per_node</span><span class="w"> </span><span class="nv">$CASTRO</span><span class="w"> </span><span class="nv">$INPUTS</span><span class="w"> </span><span class="si">${</span><span class="nv">restartString</span><span class="si">}</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="linenos">89</span><span class="nb">wait</span>
+<span class="linenos">90</span><span class="c1"># use jswait to wait for Castro to exit and then get the exit code</span>
+<span class="linenos">91</span>jswait<span class="w"> </span><span class="m">1</span>
 </pre></div>
 </div>
 </section>
 <section id="chaining-jobs">
-<h3>Chaining jobs<a class="headerlink" href="#chaining-jobs" title="Permalink to this heading">¶</a></h3>
+<h3>Chaining jobs<a class="headerlink" href="#chaining-jobs" title="Link to this heading">¶</a></h3>
 <p>The script <code class="docutils literal notranslate"><span class="pre">job_scripts/summit/chain_submit.sh</span></code> can be used to setup job dependencies,
 i.e., a job chain.</p>
 <p>First you submit a job as usual using <code class="docutils literal notranslate"><span class="pre">bsub</span></code>, and make note of the
@@ -442,51 +472,8 @@ on the previous.  Your submission script should use the automatic
 restarting features discussed above.</p>
 </section>
 </section>
-<section id="crusher">
-<h2>Crusher<a class="headerlink" href="#crusher" title="Permalink to this heading">¶</a></h2>
-<p>The following batch script will run on 1 GPU</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
-<span class="c1">#SBATCH -A AST136_crusher</span>
-<span class="c1">#SBATCH -J testing</span>
-<span class="c1">#SBATCH -o %x-%j.out</span>
-<span class="c1">#SBATCH -t 00:05:00</span>
-<span class="c1">#SBATCH -p batch</span>
-<span class="c1">#SBATCH -N 1</span>
-
-<span class="c1"># here N is the number of compute nodes</span>
-
-<span class="nv">EXEC</span><span class="o">=</span>Castro2d.hip.x86-trento.MPI.HIP.ex
-<span class="nv">INPUTS</span><span class="o">=</span>inputs_2d.testsuite
-
-srun<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span>-c<span class="w"> </span><span class="m">2</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">1</span><span class="w"> </span>rocprof<span class="w"> </span><span class="nv">$EXEC</span><span class="w"> </span><span class="nv">$INPUTS</span><span class="w"> </span>amr.plot_files_output<span class="o">=</span><span class="m">0</span><span class="w"> </span>amr.checkpoint_files_output<span class="o">=</span><span class="m">0</span>
-</pre></div>
-</div>
-<p>or for 8 GPUs on 1 node, the following script works:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
-<span class="c1">#SBATCH -A AST136_crusher</span>
-<span class="c1">#SBATCH -J testing</span>
-<span class="c1">#SBATCH -o %x-%j.out</span>
-<span class="c1">#SBATCH -t 00:05:00</span>
-<span class="c1">#SBATCH -p batch</span>
-<span class="c1">#SBATCH -N 1</span>
-
-<span class="c1"># here N is the number of compute nodes</span>
-
-<span class="nv">EXEC</span><span class="o">=</span>Castro2d.hip.x86-trento.MPI.HIP.ex
-<span class="nv">INPUTS</span><span class="o">=</span>inputs_2d.testsuite
-
-srun<span class="w"> </span>-n<span class="w"> </span><span class="m">8</span><span class="w"> </span>-c<span class="w"> </span><span class="m">8</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">8</span><span class="w"> </span>--gpus-per-task<span class="o">=</span><span class="m">1</span><span class="w"> </span>--gpu-bind<span class="o">=</span>closest<span class="w"> </span>./<span class="nv">$EXEC</span><span class="w"> </span><span class="nv">$INPUTS</span><span class="w"> </span>amr.plot_files_output<span class="o">=</span><span class="m">0</span><span class="w"> </span>amr.checkpoint_files_output<span class="o">=</span><span class="m">0</span>
-</pre></div>
-</div>
-<p>for interactive:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">salloc<span class="w"> </span>-A<span class="w"> </span>ast136_crusher<span class="w"> </span>-J<span class="w"> </span>amrex<span class="w"> </span>-t<span class="w"> </span><span class="m">00</span>:30:00<span class="w"> </span>-p<span class="w"> </span>batch<span class="w"> </span>-N<span class="w"> </span><span class="m">1</span></span>
-</pre></div></div><p>then you can run your jobs directly on the compute node.</p>
-<p>For debugging:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">rocgdb<span class="w"> </span>--args<span class="w"> </span>./Castro2d.hip.x86-trento.MPI.HIP.ex<span class="w"> </span>inputs_2d.testsuite</span>
-</pre></div></div><p>then do <code class="docutils literal notranslate"><span class="pre">run</span></code> at the debugger prompt.</p>
-</section>
 <section id="archiving-to-hpss">
-<h2>Archiving to HPSS<a class="headerlink" href="#archiving-to-hpss" title="Permalink to this heading">¶</a></h2>
+<h2>Archiving to HPSS<a class="headerlink" href="#archiving-to-hpss" title="Link to this heading">¶</a></h2>
 <p>You can access HPSS from submit using the data transfer nodes by submitting a job
 via SLURM:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">sbatch<span class="w"> </span>-N<span class="w"> </span><span class="m">1</span><span class="w"> </span>-t<span class="w"> </span><span class="m">15</span>:00<span class="w"> </span>-A<span class="w"> </span>ast106<span class="w"> </span>--cluster<span class="w"> </span>dtn<span class="w"> </span>test_hpss.sh</span>
@@ -528,21 +515,17 @@ archived by <code class="docutils literal notranslate"><span class="pre">process
 for a description of usage and arguments.</p>
 </section>
 <section id="frontier">
-<h2>Frontier<a class="headerlink" href="#frontier" title="Permalink to this heading">¶</a></h2>
+<h2>Frontier<a class="headerlink" href="#frontier" title="Link to this heading">¶</a></h2>
+<section id="machine-details">
+<h3>Machine details<a class="headerlink" href="#machine-details" title="Link to this heading">¶</a></h3>
 <p>Queue policies are here:
 <a class="reference external" href="https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#scheduling-policy">https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#scheduling-policy</a></p>
 <p>Filesystem is called <code class="docutils literal notranslate"><span class="pre">orion</span></code>, and is Lustre:
 <a class="reference external" href="https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#data-and-storage">https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#data-and-storage</a></p>
-<p>Workaround to prevent hangs for collectives:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">FI_MR_CACHE_MONITOR</span><span class="o">=</span>memhooks
-</pre></div>
-</div>
-<p>Some AMReX reports are that it hangs if the initial Arena size is too big, and we should do</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>amrex.the_arena_init_size<span class="o">=</span><span class="m">0</span>
-</pre></div>
-</div>
-<p>The arena size would then grow as needed with time.  There is a suggestion that if the size is
-larger than</p>
+</section>
+<section id="submitting-jobs">
+<h3>Submitting jobs<a class="headerlink" href="#submitting-jobs" title="Link to this heading">¶</a></h3>
+<p>Frontier uses SLURM.</p>
 <p>Here’s a script that runs with 2 nodes using all 8 GPUs per node:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#SBATCH -A AST106</span>
@@ -562,10 +545,59 @@ larger than</p>
 
 module<span class="w"> </span>load<span class="w"> </span>PrgEnv-gnu<span class="w"> </span>craype-accel-amd-gfx90a<span class="w"> </span>cray-mpich<span class="w"> </span>rocm<span class="w"> </span>amd-mixed
 
-srun<span class="w"> </span>./<span class="nv">$EXEC</span><span class="w"> </span><span class="nv">$INPUTS</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NMPI_PER_NODE</span><span class="o">=</span><span class="m">8</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">TOTAL_NMPI</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="si">${</span><span class="nv">SLURM_JOB_NUM_NODES</span><span class="si">}</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="si">${</span><span class="nv">NMPI_PER_NODE</span><span class="si">}</span><span class="w"> </span><span class="k">))</span>
+
+srun<span class="w"> </span>-n<span class="si">${</span><span class="nv">TOTAL_NMPI</span><span class="si">}</span><span class="w"> </span>-N<span class="si">${</span><span class="nv">SLURM_JOB_NUM_NODES</span><span class="si">}</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">8</span><span class="w"> </span>--gpus-per-task<span class="o">=</span><span class="m">1</span><span class="w"> </span>./<span class="nv">$EXEC</span><span class="w"> </span><span class="nv">$INPUTS</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of June 2023, it is necessary to explicitly use <code class="docutils literal notranslate"><span class="pre">-n</span></code> and <code class="docutils literal notranslate"><span class="pre">-N</span></code> on the <code class="docutils literal notranslate"><span class="pre">srun</span></code> line.</p>
+</div>
+<p>The job is submitted as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">sbatch<span class="w"> </span>frontier.slurm</span>
+</pre></div></div><p>where <code class="docutils literal notranslate"><span class="pre">frontier.slurm</span></code> is the name of the submission script.</p>
+<p>A sample job script that includes the automatic restart functions can be found here:
+<a class="reference external" href="https://github.com/AMReX-Astro/workflow/blob/main/job_scripts/frontier/frontier.slurm">https://github.com/AMReX-Astro/workflow/blob/main/job_scripts/frontier/frontier.slurm</a></p>
 <p>Also see the WarpX docs: <a class="reference external" href="https://warpx.readthedocs.io/en/latest/install/hpc/frontier.html">https://warpx.readthedocs.io/en/latest/install/hpc/frontier.html</a></p>
+</section>
+<section id="job-status">
+<h3>Job Status<a class="headerlink" href="#job-status" title="Link to this heading">¶</a></h3>
+<p>You can check on the status of your jobs via:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">squeue<span class="w"> </span>--me</span>
+</pre></div></div><p>and get an estimated start time via:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">squeue<span class="w"> </span>--me<span class="w"> </span>--start</span>
+</pre></div></div></section>
+<section id="job-chaining">
+<h3>Job Chaining<a class="headerlink" href="#job-chaining" title="Link to this heading">¶</a></h3>
+<p>The script <a class="reference external" href="/ccs/home/zingale/bin/chainslurm.sh">chainslurm.sh</a> can be used to start
+a job chain, with each job depending on the previous.  For example, to start up
+10 jobs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">chainslurm<span class="w"> </span>-1<span class="w"> </span><span class="m">10</span><span class="w"> </span>frontier.slurm</span>
+</pre></div></div><p>If you want to add the chain to an existing queued job, change the <code class="docutils literal notranslate"><span class="pre">-1</span></code> to the job-id
+of the existing job.</p>
+</section>
+<section id="debugging">
+<h3>Debugging<a class="headerlink" href="#debugging" title="Link to this heading">¶</a></h3>
+<p>For debugging:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">rocgdb<span class="w"> </span>--args<span class="w"> </span>./Castro2d.hip.x86-trento.MPI.HIP.ex<span class="w"> </span>inputs_2d.testsuite</span>
+</pre></div></div><p>then do <code class="docutils literal notranslate"><span class="pre">run</span></code> at the debugger prompt.</p>
+</section>
+<section id="troubleshooting">
+<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h3>
+<p>Workaround to prevent hangs for collectives:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">FI_MR_CACHE_MONITOR</span><span class="o">=</span>memhooks
+</pre></div>
+</div>
+<p>Some AMReX reports are that it hangs if the initial Arena size is too big, and we should do</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>amrex.the_arena_init_size<span class="o">=</span><span class="m">0</span>
+</pre></div>
+</div>
+<p>The arena size would then grow as needed with time.  There is a suggestion that if the size is
+larger than</p>
+</section>
 </section>
 </section>
 

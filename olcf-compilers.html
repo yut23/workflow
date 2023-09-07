@@ -13,11 +13,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/clipboard.min.js"></script>
-        <script src="_static/copybutton.js"></script>
+        <script src="_static/documentation_options.js?v=f2a433a1"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -54,7 +54,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="olcf.html">Working at OLCF</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Compiling at OLCF</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#summit">Summit</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#crusher">Crusher</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#frontier">Frontier</a></li>
 </ul>
 </li>
@@ -93,9 +92,9 @@
            <div itemprop="articleBody">
              
   <section id="compiling-at-olcf">
-<h1>Compiling at OLCF<a class="headerlink" href="#compiling-at-olcf" title="Permalink to this heading">¶</a></h1>
+<h1>Compiling at OLCF<a class="headerlink" href="#compiling-at-olcf" title="Link to this heading">¶</a></h1>
 <section id="summit">
-<h2>Summit<a class="headerlink" href="#summit" title="Permalink to this heading">¶</a></h2>
+<h2>Summit<a class="headerlink" href="#summit" title="Link to this heading">¶</a></h2>
 <p>In order to compile you will need to swap the xl module with gcc (you need to use atleast gcc/7.4.0 due to C++17 support):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><style type="text/css">
 span.prompt1:before {
@@ -136,36 +135,8 @@ doesn’t use this feature.</p></li>
 </ul>
 </div>
 </section>
-<section id="crusher">
-<h2>Crusher<a class="headerlink" href="#crusher" title="Permalink to this heading">¶</a></h2>
-<p>log into <code class="docutils literal notranslate"><span class="pre">crusher.olcf.ornl.gov</span></code></p>
-<p>We want to build with ROCm/HIP.  Currently, we only work with ROCm 5.x,
-which you load as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">module<span class="w"> </span>load<span class="w"> </span>PrgEnv-amd<span class="w"> </span>craype-accel-amd-gfx90a<span class="w"> </span>cray-mpich/8.1.16<span class="w"> </span>rocm/5.1.0</span>
-</pre></div></div><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>There are specific MPICH versions that work with each ROCm release,
-as described in: <a class="reference external" href="https://docs.olcf.ornl.gov/systems/crusher_quick_start_guide.html#determining-the-compatibility-of-cray-mpich-and-rocm">Determining the Compatibility of Cray MPICH and ROCm</a>.</p>
-</div>
-<p>We can then build with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">make<span class="w"> </span><span class="nv">COMP</span><span class="o">=</span>gnu<span class="w"> </span><span class="nv">USE_HIP</span><span class="o">=</span>TRUE</span>
-</pre></div></div><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Async I/O can sometimes have issues on crusher, so it is best to
-leave it off.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Sometimes the job will start (according to <code class="docutils literal notranslate"><span class="pre">squeue</span></code>) but appear to
-hang.  This is because there are often bad nodes, and you need to
-exclude the bad nodes.  Currently use:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#SBATCH --exclude=crusher[025-027,036,038-040,060,081,127,136,141,101-105]</span>
-</pre></div>
-</div>
-</div>
-</section>
 <section id="frontier">
-<h2>Frontier<a class="headerlink" href="#frontier" title="Permalink to this heading">¶</a></h2>
+<h2>Frontier<a class="headerlink" href="#frontier" title="Link to this heading">¶</a></h2>
 <p>log into: <code class="docutils literal notranslate"><span class="pre">frontier.olcf.ornl.gov</span></code></p>
 <p>see: <a class="reference external" href="https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment">https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment</a></p>
 <p>load modules:</p>
@@ -173,7 +144,7 @@ exclude the bad nodes.  Currently use:</p>
 </pre></div></div><p>at the moment, that loads ROCm 5.3.0</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>ROCm 5.4.3 does not seem to work with Castro&amp;mdash;there are memory access issues
+<p>ROCm 5.4.3 does not seem to work with Castro–there are memory access issues
 in the burner</p>
 </div>
 <div class="admonition note">
@@ -183,7 +154,11 @@ to run without rate tabulation.</p>
 </div>
 <p>build via:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">make<span class="w"> </span><span class="nv">COMP</span><span class="o">=</span>gnu<span class="w"> </span><span class="nv">USE_HIP</span><span class="o">=</span>TRUE</span>
-</pre></div></div></section>
+</pre></div></div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Compiling with <code class="docutils literal notranslate"><span class="pre">DEBUG=TRUE</span></code> takes a _very_ long time and may not work.</p>
+</div>
+</section>
 </section>
 
 
