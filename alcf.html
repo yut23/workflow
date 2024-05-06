@@ -16,7 +16,7 @@
   <![endif]-->
   
         <script src="_static/documentation_options.js?v=f2a433a1"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="_static/copybutton.js?v=f281be69"></script>
@@ -53,7 +53,10 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Working at ALCF</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#logging-in">Logging In</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#compiling">Compiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling">Compiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#workaround-for-gcc-8-not-supported">Workaround for <code class="docutils literal notranslate"><span class="pre">GCC</span> <span class="pre">&lt;</span> <span class="pre">8</span> <span class="pre">not</span> <span class="pre">supported.</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#disks">Disks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#queues">Queues</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#submitting">Submitting</a></li>
@@ -112,12 +115,27 @@ span.prompt1:before {
   content: "$ ";
 }
 </style><span class="prompt1">module<span class="w"> </span>swap<span class="w"> </span>PrgEnv-nvhpc<span class="w"> </span>PrgEnv-gnu</span>
-<span class="prompt1"><span class="c1"># load gcc/11.2.0 version since CUDA doesn&#39;t support gcc 12 yet</span></span>
-<span class="prompt1">module<span class="w"> </span>load<span class="w"> </span>gcc/11.2.0</span>
 <span class="prompt1">module<span class="w"> </span>load<span class="w"> </span>nvhpc-mixed</span>
 </pre></div></div><p>Then you can compile via:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">make<span class="w"> </span><span class="nv">COMP</span><span class="o">=</span>gnu<span class="w"> </span><span class="nv">USE_CUDA</span><span class="o">=</span>TRUE</span>
-</pre></div></div></section>
+</pre></div></div><section id="workaround-for-gcc-8-not-supported">
+<h3>Workaround for <code class="docutils literal notranslate"><span class="pre">GCC</span> <span class="pre">&lt;</span> <span class="pre">8</span> <span class="pre">not</span> <span class="pre">supported.</span></code><a class="headerlink" href="#workaround-for-gcc-8-not-supported" title="Link to this heading">¶</a></h3>
+<p>Since the update on 2024-04-22 (<a class="reference external" href="https://docs.alcf.anl.gov/polaris/system-updates/#2024-04-22">https://docs.alcf.anl.gov/polaris/system-updates/#2024-04-22</a>), <code class="docutils literal notranslate"><span class="pre">gcc</span> <span class="pre">--version</span></code> returns 7.5.0, which is the default system version.
+Loading the <code class="docutils literal notranslate"><span class="pre">gcc-native</span></code> module doesn’t change this, as the newer compiler versions are located at <code class="docutils literal notranslate"><span class="pre">/usr/bin/gcc-12</span></code> and <code class="docutils literal notranslate"><span class="pre">/usr/bin/g++-12</span></code>, rather than under a versioned subdirectory.
+To work around this until the ALCF folks fix it, we can override the CC and CXX variables passed to make:</p>
+<ul>
+<li><p>For CPU builds without MPI (e.g. plotfile diagnostics):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">make<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>gcc-12<span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>g++-12<span class="w"> </span><span class="nv">COMP</span><span class="o">=</span>gnu</span>
+</pre></div></div></li>
+<li><p>For CPU builds with MPI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">make<span class="w"> </span><span class="nv">CC</span><span class="o">=</span>cc<span class="w"> </span><span class="nv">CXX</span><span class="o">=</span>CC<span class="w"> </span><span class="nv">COMP</span><span class="o">=</span>gnu<span class="w"> </span><span class="nv">USE_MPI</span><span class="o">=</span>TRUE</span>
+</pre></div></div></li>
+<li><p>For GPU builds with MPI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="prompt1">make<span class="w"> </span><span class="nv">NVCC_CCBIN</span><span class="o">=</span>g++-12<span class="w"> </span><span class="nv">COMP</span><span class="o">=</span>gnu<span class="w"> </span><span class="nv">USE_MPI</span><span class="o">=</span>TRUE<span class="w"> </span><span class="nv">USE_CUDA</span><span class="o">=</span>TRUE</span>
+</pre></div></div></li>
+</ul>
+</section>
+</section>
 <section id="disks">
 <h2>Disks<a class="headerlink" href="#disks" title="Link to this heading">¶</a></h2>
 <p>Project workspace is at: <code class="docutils literal notranslate"><span class="pre">/lus/grand/projects/AstroExplosions/</span></code></p>
